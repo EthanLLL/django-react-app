@@ -30,7 +30,7 @@ curl -X POST -d "username=luozhen&password=luozhenzuishuai" http://localhost:800
 
 eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoxLCJ1c2VybmFtZSI6Imx1b3poZW4iLCJleHAiOjE1MTkyNzQ2MDksImVtYWlsIjoiIn0.Db7-b7pIGGfCGO1RKtqkKS1kO7MS4senZMgqM6wdZbU
 
-curl -H "Authorization: JWT eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoxMiwidXNlcm5hbWUiOiJsdW96aGVuMDA3IiwiZXhwIjoxNTE5NTczNzA3LCJlbWFpbCI6Imx1b3poZW4wMDdAZ21haWwuY29tIn0.SApgysvMZ7Bm9uxXNIg3yesNJPEla9uOGw952qcAwGQ" http://localhost:8000/posts/
+curl -H "Authorization: JWT eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoxNCwidXNlcm5hbWUiOiJsdW96aGVuMDA0IiwiZXhwIjoxNTE5NjA4MDkzLCJlbWFpbCI6Imx1b3poZW4wOTA5QGdtYWlsLmNvbSJ9.57_IrS-GqK4V54YsRYmMSyioykZTSnJOKpLxMQREzgA" http://localhost:8000/posts/
 
 curl http://localhost:8000/posts/
 

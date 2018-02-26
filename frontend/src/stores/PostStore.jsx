@@ -24,6 +24,7 @@ class PostStore {
     }).then((res) => {
       const post = res.data.results
       console.log(post)
+      console.log(this.postList)
       console.log(this.postList.length)
       this.addToPost(post)
       alert('success fetch api from posts')
