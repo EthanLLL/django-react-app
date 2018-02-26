@@ -1,0 +1,8 @@
+env/*
+venv/*
+.idea/*
+backend/db.sqlite3
+__pycache__
+*.pyc
+node_modules
+migrations
