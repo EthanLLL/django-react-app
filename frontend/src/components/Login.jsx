@@ -1,50 +1,32 @@
 import React, { Component } from 'react';
 import { Button, Form, Grid, Header, Image, Message, Segment } from 'semantic-ui-react';
 import axios from 'axios';
-import { history } from 'react-router-dom'
+import { history } from 'react-router-dom';
+import { observer, inject } from 'mobx-react';
 
+@inject('AuthStore')
+@observer
 class Login extends Component {
-  constructor(props){
-    super(props)
-    this.state = {
-      username: '',
-      email: '',
-      password: '',
-      saveBox: false,
-    }
+
+  handleUsernameChange = e => {
+    this.props.AuthStore.setUsername(e.target.value)
   }
 
-  _login(login_data){
-    const { username, email, password } = login_data
-    const payload = { username, email, password }
-    console.log(payload)
-    axios.post('/auth/token/', payload)
-      .then(function(res){
-        console.log(res.data)
-      })
+  handleEmailChange = e => {
+    this.props.AuthStore.setEmail(e.target.value)
   }
 
-  handleInputChange(event) {
-    const target = event.target;
-    const value = target.value;
-    const name = target.name;
-    this.setState({
-      [name]: value
-    });
-  }
-
-  handleCheck(e) {
-    this.setState({
-      saveBox: !this.state.saveBox
-    })
+  handlePasswordChange = e => {
+    this.props.AuthStore.setPassword(e.target.value)
   }
 
   handleClick(e){
     e.preventDefault()
-    this._login(this.state)
+    this.props.AuthStore.login()
   }
 
   render() {
+    const { values, errors, inProgress } = this.props.AuthStore
     return (
       <div>
       <Grid
@@ -60,28 +42,31 @@ class Login extends Component {
           <Segment stacked>
             <Form.Input
               fluid
+              size='huge'
               icon='user'
               name='username'
-              value={this.state.username}
-              onChange={this.handleInputChange.bind(this)}
+              value={values.username}
+              onChange={this.handleUsernameChange.bind(this)}
               iconPosition='left'
               placeholder='Username'
             />
             <Form.Input
               fluid
+              size='huge'
               icon='user'
               name='email'
-              value={this.state.email}
-              onChange={this.handleInputChange.bind(this)}
+              value={values.email}
+              onChange={this.handleEmailChange.bind(this)}
               iconPosition='left'
               placeholder='Email'
             />
             <Form.Input
               fluid
+              size='huge'
               icon='lock'
               name='password'
-              value={this.state.password}
-              onChange={this.handleInputChange.bind(this)}
+              value={values.password}
+              onChange={this.handlePasswordChange.bind(this)}
               iconPosition='left'
               placeholder='Password'
               type='password'

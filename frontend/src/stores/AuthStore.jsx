@@ -61,6 +61,10 @@ class AuthStore {
         console.log(err)
       })
   }
+
+  @action logout = () => {
+    localStorage.removeItem('token')
+  }
 }
 
 export default new AuthStore()

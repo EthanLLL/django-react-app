@@ -1,5 +1,6 @@
 import { observable, action } from 'mobx';
 import axios from 'axios';
+import CommonStore from './CommonStore';
 
 class PostStore {
 
@@ -12,22 +13,19 @@ class PostStore {
     updated: ''
   }
 
-  @action addToPost = (post) => {
-    this.postList.push(post)
+  @action addToPost = (instance) => {
+    this.postList.push(...instance)
   }
 
   @action getPostList = () => {
     axios.get('/posts/', {
       headers: {
-        "Authorization": 'JWT ' + localStorage.getItem('token')
+        "Authorization": 'JWT ' + CommonStore.token
       }
     }).then((res) => {
-      const post = res.data.results
-      console.log(post)
-      console.log(this.postList)
-      console.log(this.postList.length)
-      this.addToPost(post)
-      alert('success fetch api from posts')
+      const posts = res.data.results
+      console.log(posts)
+      this.addToPost(posts)
     })
   }
 }

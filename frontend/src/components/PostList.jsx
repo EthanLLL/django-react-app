@@ -14,8 +14,8 @@ class PostList extends Component {
     return (
       <div>
         {PostStore.postList.map((item, i) => (
-          <div key={i}>
-            <p>{item.user}</p>
+          <div key={item.id}>
+            <p>{item.user.username}</p>
             <p>{item.content}</p>
             <p>{item.timestamp}</p>
           </div>
