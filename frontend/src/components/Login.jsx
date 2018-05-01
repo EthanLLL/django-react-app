@@ -3,8 +3,10 @@ import { Button, Form, Grid, Header, Image, Message, Segment } from 'semantic-ui
 import axios from 'axios';
 import { history } from 'react-router-dom';
 import { observer, inject } from 'mobx-react';
+import { withRouter } from 'react-router-dom';
 
-@inject('AuthStore')
+@inject('AuthStore', 'CommonStore')
+@withRouter
 @observer
 class Login extends Component {
 
@@ -23,6 +25,9 @@ class Login extends Component {
   handleClick(e){
     e.preventDefault()
     this.props.AuthStore.login()
+    if (this.props.CommonStore.token) {
+      this.props.history.replace('/')
+    }
   }
 
   render() {

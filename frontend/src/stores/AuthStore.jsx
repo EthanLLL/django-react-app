@@ -1,5 +1,5 @@
 import { observable, action } from 'mobx';
-import axios from 'axios';
+import axios from '../apis/axios';
 
 class AuthStore {
   @observable inProgress = false
@@ -54,7 +54,6 @@ class AuthStore {
     const payload = this.values
     axios.post('/users/register/', payload)
       .then((res) => {
-        console.log('registered' + res.data)
         this.login()
       })
       .catch((err) => {

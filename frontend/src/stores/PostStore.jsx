@@ -1,5 +1,5 @@
 import { observable, action } from 'mobx';
-import axios from 'axios';
+import axios from '../apis/axios';
 import CommonStore from './CommonStore';
 
 class PostStore {
@@ -14,15 +14,12 @@ class PostStore {
   }
 
   @action addToPost = (instance) => {
+    this.postList = []
     this.postList.push(...instance)
   }
 
   @action getPostList = () => {
-    axios.get('/posts/', {
-      headers: {
-        "Authorization": 'JWT ' + CommonStore.token
-      }
-    }).then((res) => {
+    axios.get('/posts/').then((res) => {
       const posts = res.data.results
       console.log(posts)
       this.addToPost(posts)

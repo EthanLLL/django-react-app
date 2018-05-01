@@ -5,11 +5,6 @@ class CommonStore {
   @observable appName = '罗震最帅'
   @observable token = window.localStorage.getItem('token')
   @observable appLoaded = false
-  @observable header = {
-    headers: {
-      "Authorization": 'JWT ' + localStorage.getItem('token')
-    }
-  }
 
   constructor() {
     reaction(
@@ -30,16 +25,6 @@ class CommonStore {
 
   @action setAppLoaded() {
     this.appLoaded = true
-  }
-
-  @action setHeader() {
-    if (this.token) {
-      this.header = {
-        headers: {
-          "Authorization": 'JWT ' + this.token
-        }
-      }
-    }
   }
 }
 
