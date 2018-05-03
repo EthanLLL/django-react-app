@@ -1,5 +1,7 @@
 import { observable, action } from 'mobx';
 import axios from '../apis/axios';
+import CommonStore from './CommonStore';
+import RouteStore from './RouteStore';
 
 class AuthStore {
   @observable inProgress = false
@@ -43,10 +45,12 @@ class AuthStore {
     }
     axios.post('/auth/token/', payload)
       .then((res) => {
-        console.log('logging' + res.data.token)
         const token = res.data.token
         localStorage.removeItem('token')
         localStorage.setItem('token', token)
+        CommonStore.setToken(token)
+        CommonStore.setLogin()
+        RouteStore.history.replace('/')
       })
   }
 
@@ -63,6 +67,7 @@ class AuthStore {
 
   @action logout = () => {
     localStorage.removeItem('token')
+    CommonStore.setLogout()
   }
 }
 

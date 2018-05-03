@@ -45,6 +45,7 @@ class PostListAPIView(ListAPIView):
     pagination_class = PostLimitOffsetPagination
 
     def get_queryset(self, *args, **kwargs):
+        user = self.request.user
         queryset_list = Post.objects.all()
         query = self.request.GET.get('q', None)
         if query:

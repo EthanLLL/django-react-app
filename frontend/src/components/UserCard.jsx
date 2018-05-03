@@ -1,18 +1,25 @@
 import React, { Component } from 'react';
 import { Card, Image, Button, Icon } from 'semantic-ui-react';
+import { observer, inject } from 'mobx-react';
 
+@inject('UserStore', 'CommonStore')
+@observer
 class UserCard extends Component {
+
+
   render() {
+    const { username, email } = this.props.UserStore
+
     return (
       <div>
         <Card>
           <Card.Content>
             <Image floated='left' size='mini' src='http://p.kengdie.com/touxiang/03/57/141465082.jpg' />
             <Card.Header>
-              罗震
+              {username}
             </Card.Header>
             <Card.Meta>
-              joined by 2018-02?
+              {email}
             </Card.Meta>
           </Card.Content>
           <Image src='http://old.bz55.com/uploads/allimg/160607/140-16060G00128.jpg' />

@@ -25,9 +25,6 @@ class Login extends Component {
   handleClick(e){
     e.preventDefault()
     this.props.AuthStore.login()
-    if (this.props.CommonStore.token) {
-      this.props.history.replace('/')
-    }
   }
 
   render() {

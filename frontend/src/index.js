@@ -9,13 +9,17 @@ import registerServiceWorker from './registerServiceWorker';
 import AuthStore from './stores/AuthStore';
 import PostStore from './stores/PostStore';
 import CommonStore from './stores/CommonStore';
+import RouteStore from './stores/RouteStore';
+import UserStore from './stores/UserStore';
 import { HashRouter } from 'react-router-dom';
 import 'element-theme-default';
 
 const stores = {
   AuthStore,
   PostStore,
-  CommonStore
+  CommonStore,
+  RouteStore,
+  UserStore
 }
 
 const Root = (

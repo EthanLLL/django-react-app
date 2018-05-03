@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { inject, observer } from 'mobx-react';
 
-@inject('PostStore')
+@inject('PostStore', 'CommonStore')
 @observer
 class PostList extends Component {
 
@@ -13,6 +13,7 @@ class PostList extends Component {
     const { PostStore } = this.props
     return (
       <div>
+        <p>{this.props.CommonStore.isLogin.toString()}</p>
         {PostStore.postList.map((item, i) => (
           <div key={item.id}>
             <p>{item.user.username}</p>

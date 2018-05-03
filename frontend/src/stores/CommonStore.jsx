@@ -1,10 +1,12 @@
 import { observable, action, reaction } from 'mobx';
+import axios from '../apis/axios';
 
 class CommonStore {
 
   @observable appName = '罗震最帅'
   @observable token = window.localStorage.getItem('token')
   @observable appLoaded = false
+  @observable isLogin = false
 
   constructor() {
     reaction(
@@ -19,8 +21,17 @@ class CommonStore {
     )
   }
 
+  @action setLogin() {
+    this.isLogin = true
+  }
+
+  @action setLogout() {
+    this.isLogin = false
+  }
+
   @action setToken(token) {
     this.token = token
+    axios.defaults.headers.common['Authorization'] = 'JWT ' + this.token
   }
 
   @action setAppLoaded() {

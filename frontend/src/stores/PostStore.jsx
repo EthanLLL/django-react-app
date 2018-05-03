@@ -21,7 +21,6 @@ class PostStore {
   @action getPostList = () => {
     axios.get('/posts/').then((res) => {
       const posts = res.data.results
-      console.log(posts)
       this.addToPost(posts)
     })
   }

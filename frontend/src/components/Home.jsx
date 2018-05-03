@@ -3,7 +3,12 @@ import axios from 'axios';
 import PostList from './PostList';
 import UserCard from './UserCard';
 import { Grid } from 'semantic-ui-react';
+import { inject, observer } from 'mobx-react';
+import { withRouter } from 'react-router-dom';
 
+@inject('CommonStore')
+@observer
+@withRouter
 class Home extends Component {
 
   render() {

@@ -32,6 +32,20 @@ from .serializers import (
 
 User = get_user_model()
 
+
+class UserInfoAPIView(APIView):
+
+    def get(self, request):
+        user = request.user
+        return Response({
+            'success': 1,
+            'data': {
+                'username': user.username,
+                'email': user.email
+            }
+        })
+
+
 class UserCreateAPIView(CreateAPIView):
     permission_classes = [
         AllowAny
