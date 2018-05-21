@@ -7,7 +7,7 @@ class UserStore {
   @observable email;
   @observable currentUser;
 
-  @action fatchUserInfo() {
+  @action fetchUserInfo() {
     axios.get('/users/user_info').then((res) => {
       if (res.data.success === 1) {
         this.setUserInfo(res.data.data)

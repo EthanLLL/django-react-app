@@ -6,6 +6,10 @@ import { observer, inject } from 'mobx-react';
 @observer
 class UserCard extends Component {
 
+  componentWillMount() {
+    this.props.UserStore.fetchUserInfo()
+  }
+
   render() {
     const { username, email } = this.props.UserStore
     return (

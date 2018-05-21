@@ -87,12 +87,15 @@ class Register extends Component {
               placeholder='Password'
               type='password'
             />
-            <Button color='teal' 
-                    fluid size='large'
-                    onClick={this.handleClick.bind(this)} >Login</Button>
+            <Button 
+              color='teal' 
+              fluid size='large'
+              onClick={this.handleClick.bind(this)} >
+              Register
+            </Button>
         </Form>
         <Message>
-          已有账号？ <Link to='/login/'>登陆</Link>
+          已有账号？ <Link to='/login'>登陆</Link>
         </Message>
       </Grid.Column>
     </Grid>

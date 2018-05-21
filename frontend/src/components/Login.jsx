@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Button, Form, Grid, Header, Message, Segment } from 'semantic-ui-react';
 import { observer, inject } from 'mobx-react';
-import { withRouter } from 'react-router-dom';
+import { withRouter, Link } from 'react-router-dom';
 
 @inject('AuthStore', 'CommonStore')
 @withRouter
@@ -80,7 +80,7 @@ class Login extends Component {
           </Segment>
         </Form>
         <Message>
-          新朋友？ <a href='/register/'>注册</a>
+          新朋友？ <Link to='/register/'>注册</Link>
         </Message>
       </Grid.Column>
     </Grid>

@@ -33,7 +33,7 @@ class Navbar extends Component {
               <Menu.Item>
                 <Input icon='search' placeholder='Search something...' />
               </Menu.Item>
-              <Menu.Item name='logout' onClick={this.handleLogout} />
+              <Menu.Item name='log out' onClick={this.handleLogout} />
             </Menu.Menu>
           </Menu>
         </div>
@@ -48,7 +48,7 @@ class Navbar extends Component {
               <Menu.Item>
                 <Input icon='search' placeholder='Search something...' />
               </Menu.Item>
-              <Menu.Item as={Link} to='/login' name='login' />
+              <Menu.Item as={Link} to='/login' name='log in' />
             </Menu.Menu>
           </Menu>
         </div>

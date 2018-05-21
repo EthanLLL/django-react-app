@@ -16,10 +16,6 @@ import { observer, inject } from 'mobx-react';
 @observer
 class Router extends Component {
 
-  componentWillMount() {
-    this.props.UserStore.fatchUserInfo()
-  }
-
   render() {
 
     return (

@@ -57,6 +57,7 @@ class AuthStore {
 
   @action register = () => {
     const payload = this.values
+    axios.defaults.headers.common['Authorization'] = null
     axios.post('/users/register/', payload)
       .then((res) => {
         this.login()
