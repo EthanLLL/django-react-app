@@ -1,5 +1,8 @@
 import React, { Component } from 'react';
 import { inject, observer } from 'mobx-react';
+import PostItem from './PostItem';
+import { Card } from 'semantic-ui-react';
+
 
 @inject('PostStore', 'CommonStore')
 @observer
@@ -12,16 +15,14 @@ class PostList extends Component {
   render() {
     const { PostStore } = this.props
     return (
-      <div>
-        <p>{this.props.CommonStore.isLogin.toString()}</p>
-        {PostStore.postList.map((item, i) => (
-          <div key={item.id}>
-            <p>{item.user.username}</p>
-            <p>{item.content}</p>
-            <p>{item.timestamp}</p>
-          </div>
-        ))}
+      <div className='post-list'>
+        <Card.Group>
+          {PostStore.postList.map((item, i) => (
+            <PostItem key={item.id} item={item} />
+          ))}
+        </Card.Group>
       </div>
+      
     );
   }
 }

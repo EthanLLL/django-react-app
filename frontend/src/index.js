@@ -18,8 +18,8 @@ const stores = {
   AuthStore,
   PostStore,
   CommonStore,
-  RouteStore,
-  UserStore
+  UserStore,
+  RouteStore
 }
 
 const Root = (

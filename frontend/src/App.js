@@ -1,14 +1,13 @@
 import React, { Component } from 'react';
 import './App.css';
-import axios from 'axios';
 import Router from './routes';
 import { withRouter } from 'react-router-dom';
 import { Container } from 'semantic-ui-react';
 import { inject, observer } from 'mobx-react';
 
 
+@inject('UserStore', 'CommonStore', 'RouteStore')
 @withRouter
-@inject('RouteStore', 'UserStore', 'CommonStore')
 @observer
 class App extends Component {
 
@@ -16,10 +15,6 @@ class App extends Component {
     super(props)
 
     this.props.RouteStore.history = this.props.history
-  }
-
-  componentWillMount() {
-    this.props.UserStore.fatchUserInfo()
   }
 
   render() {

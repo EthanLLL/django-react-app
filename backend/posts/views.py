@@ -46,7 +46,7 @@ class PostListAPIView(ListAPIView):
 
     def get_queryset(self, *args, **kwargs):
         user = self.request.user
-        queryset_list = Post.objects.all()
+        queryset_list = Post.objects.all().order_by('-timestamp')
         query = self.request.GET.get('q', None)
         if query:
             queryset_list = queryset_list.filter(
@@ -62,15 +62,20 @@ class PostDetailAPIView(RetrieveAPIView):
     serializer_class = PostDetailSerializer
 
 
-class PostCreateAPIView(CreateAPIView):
-    queryset = Post.objects.all()
-    serializer_class = PostDetailSerializer
-    permission_classes = [
-        IsAuthenticated
-    ]
-
-    def perform_create(self, serializer):
-        serializer.save(user=self.request.user)
+class PostCreateAPIView(APIView):
+    
+    def post(self, request):
+        user_id = request.user.id
+        content = request.data.get('content', '')
+        print (content)
+        post = Post.objects.create(
+            content=content,
+            user_id=user_id
+        )
+        return Response({
+            'success': 1,
+            'msg': u'发布成功'
+        })
 
 
 class PostUpdateAPIView(UpdateAPIView):

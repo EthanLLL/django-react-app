@@ -3,8 +3,6 @@ import NProgress from 'nprogress';
 import { Notification } from 'element-react';
 import RouteStore from '../stores/RouteStore';
 import CommonStore from '../stores/CommonStore';
-import { Redirect } from 'react-router-dom';
-import React, { Component } from 'react';
 
 axios.defaults.xsrfHeaderName = 'X-CSRFToken'
 axios.defaults.xsrfCookieName = 'csrftoken'
@@ -20,9 +18,7 @@ axios.interceptors.request.use(function (config) {
 })
 
 axios.interceptors.response.use(function (response) {
-
   NProgress.done()
-  
   return response
 }, function (error) {
   let type = 'error'

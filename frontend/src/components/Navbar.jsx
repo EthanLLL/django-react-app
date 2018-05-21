@@ -1,24 +1,18 @@
 import React, { Component } from 'react';
 import { Input, Menu } from 'semantic-ui-react';
-import { Link, NavLink } from 'react-router-dom';
-import AuthStore from '../stores/AuthStore';
+import { Link } from 'react-router-dom';
 import { inject, observer } from 'mobx-react';
 import { withRouter } from 'react-router-dom';
 
-@inject('AuthStore', 'CommonStore')
-@observer
+@inject('AuthStore', 'CommonStore', 'UserStore')
 @withRouter
+@observer
 class Navbar extends Component {
   constructor(props) {
     super(props);
     this.state = {
       activeItem: 'home'
     }
-    this.handleItemClick = this.handleItemClick.bind(this)
-  }
-
-  handleItemClick(e) {
-    console.log(e.target.name)
   }
 
   handleLogout = e => {
@@ -28,30 +22,39 @@ class Navbar extends Component {
 
   render() {
     const { activeItem } = this.state
-    let { isLogin } = this.props.CommonStore
-    let LoginButton = ''
-    if (isLogin === true) {
-      LoginButton = <Menu.Item name='logout' active={activeItem === 'logout'} onClick={this.handleLogout} />
+    let {isLogin} = this.props.CommonStore
+    if (isLogin) {
+      return (
+        <div>
+          <Menu size='huge' secondary >
+            <Menu.Item as={Link} to='/' name='home' active={activeItem === 'home'} />
+            <Menu.Item name='messages' active={activeItem === 'messages'} />
+            <Menu.Menu position='right'>
+              <Menu.Item>
+                <Input icon='search' placeholder='Search something...' />
+              </Menu.Item>
+              <Menu.Item name='logout' onClick={this.handleLogout} />
+            </Menu.Menu>
+          </Menu>
+        </div>
+      );
+    } else {
+      return (
+        <div>
+          <Menu size='huge' secondary >
+            <Menu.Item as={Link} to='/' name='home' active={activeItem === 'home'} />
+            <Menu.Item name='messages' active={activeItem === 'messages'} />
+            <Menu.Menu position='right'>
+              <Menu.Item>
+                <Input icon='search' placeholder='Search something...' />
+              </Menu.Item>
+              <Menu.Item as={Link} to='/login' name='login' />
+            </Menu.Menu>
+          </Menu>
+        </div>
+      )
     }
-    else {
-      LoginButton = <Menu.Item as={Link} to='/login' name='login' active={activeItem === 'login'} onClick={this.handleItemClick} />
-    }
-
-    return (
-      <div>
-        <Menu secondary>
-          <Menu.Item as={Link} to='/' name='home' active={activeItem === 'home'} onClick={this.handleItemClick} />
-          <Menu.Item name='messages' active={activeItem === 'messages'} onClick={this.handleItemClick} />
-          
-          <Menu.Menu position='right'>
-            <Menu.Item>
-              <Input icon='search' placeholder={isLogin.toString()} />
-            </Menu.Item>
-            {LoginButton}
-          </Menu.Menu>
-        </Menu>
-      </div>
-    );
+    
   }
 }
 

@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
-import { Button, Form, Grid, Header, Image, Message, Segment } from 'semantic-ui-react';
-import axios from 'axios';
+import { Button, Form, Grid, Header, Message } from 'semantic-ui-react';
 import { observer, inject } from 'mobx-react';
-
+import { withRouter } from 'react-router-dom';
+import {Link} from 'react-router-dom';
 
 @inject('AuthStore')
+@withRouter
 @observer
 class Register extends Component {
 
@@ -30,7 +31,7 @@ class Register extends Component {
   }
 
   render() {
-    const { values, errors, inProgress } = this.props.AuthStore
+    const { values } = this.props.AuthStore
     return (
       <div>
       <Grid
@@ -91,7 +92,7 @@ class Register extends Component {
                     onClick={this.handleClick.bind(this)} >Login</Button>
         </Form>
         <Message>
-          已有账号？ <a href='/login/'>登陆</a>
+          已有账号？ <Link to='/login/'>登陆</Link>
         </Message>
       </Grid.Column>
     </Grid>

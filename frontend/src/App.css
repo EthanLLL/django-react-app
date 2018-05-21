@@ -6,3 +6,11 @@ body{
   font-family: sans-serif;
 }
 
+.home-component {
+  margin-top: 1em;
+}
+
+.post-list {
+  margin-top: 1em;
+}
+

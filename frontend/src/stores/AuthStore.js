@@ -50,6 +50,7 @@ class AuthStore {
         localStorage.setItem('token', token)
         CommonStore.setToken(token)
         CommonStore.setLogin()
+        
         RouteStore.history.replace('/')
       })
   }

@@ -1,15 +1,13 @@
 import React, { Component } from 'react';
-import { Card, Image, Button, Icon } from 'semantic-ui-react';
+import { Card, Image, Icon } from 'semantic-ui-react';
 import { observer, inject } from 'mobx-react';
 
 @inject('UserStore', 'CommonStore')
 @observer
 class UserCard extends Component {
 
-
   render() {
     const { username, email } = this.props.UserStore
-
     return (
       <div>
         <Card>

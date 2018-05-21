@@ -1,29 +1,38 @@
 import React, { Component } from 'react';
 import {
-  BrowserRouter,
   Route,
   Switch,
-  withRouter
+  withRouter,
+  HashRouter
 } from 'react-router-dom'
 import Home from '../components/Home';
 import Register from '../components/Register';
-import Auth from '../components/Auth';
 import Login from '../components/Login';
 import Navbar from '../components/Navbar';
+import { observer, inject } from 'mobx-react';
 
+@inject('UserStore', 'CommonStore')
 @withRouter
+@observer
 class Router extends Component {
+
+  componentWillMount() {
+    this.props.UserStore.fatchUserInfo()
+  }
+
   render() {
+
     return (
+      <HashRouter>
       <div>
         <Navbar />
         <Switch>
-          <Route exact path="/" component = {Home} />
-          <Route exact path="/register" render={props => <Register {...props} />} />
-          <Route exact path="/auth" render={props => <Auth {...props} />} />
-          <Route exact path="/login" render={props => <Login {...props} />} />
+          <Route path="/register" component={Register} />
+          <Route path="/login" component={Login} />
+          <Route path="/" component = {Home} />
         </Switch>
       </div>
+      </HashRouter>
     );
   }
 }

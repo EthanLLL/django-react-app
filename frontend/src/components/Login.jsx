@@ -1,7 +1,5 @@
 import React, { Component } from 'react';
-import { Button, Form, Grid, Header, Image, Message, Segment } from 'semantic-ui-react';
-import axios from 'axios';
-import { history } from 'react-router-dom';
+import { Button, Form, Grid, Header, Message, Segment } from 'semantic-ui-react';
 import { observer, inject } from 'mobx-react';
 import { withRouter } from 'react-router-dom';
 
@@ -25,10 +23,13 @@ class Login extends Component {
   handleClick(e){
     e.preventDefault()
     this.props.AuthStore.login()
+    if (this.props.CommonStore.isLogin) {
+      this.props.history.replace('/')
+    }
   }
 
   render() {
-    const { values, errors, inProgress } = this.props.AuthStore
+    const { values } = this.props.AuthStore
     return (
       <div>
       <Grid

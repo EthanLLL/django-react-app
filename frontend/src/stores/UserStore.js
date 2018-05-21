@@ -5,6 +5,7 @@ import CommonStore from './CommonStore';
 class UserStore {
   @observable username;
   @observable email;
+  @observable currentUser;
 
   @action fatchUserInfo() {
     axios.get('/users/user_info').then((res) => {
@@ -16,8 +17,13 @@ class UserStore {
   }
 
   @action setUserInfo(user) {
+    this.currentUser = 1
     this.username = user.username
     this.email = user.email
+  }
+
+  @action forgetUser() {
+    this.currentUser = undefined
   }
 }
 
