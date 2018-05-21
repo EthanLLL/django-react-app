@@ -23,5 +23,5 @@ urlpatterns = [
     url(r'^posts/', include('posts.urls', namespace='post')),
     url(r'^auth/token', obtain_jwt_token),
     url(r'^users/', include('accounts.urls', namespace='users')),
-    # url(r'^', TemplateView.as_view(template_name='index.html'))
+    url(r'^', TemplateView.as_view(template_name='index.html'))
 ]
