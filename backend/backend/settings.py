@@ -26,7 +26,11 @@ SECRET_KEY = '8mz@(fs6mj!=mon-wk33tcp9_9(3bms(9=(6io5%_suf9y^@ro'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [
+    '119.29.146.170',
+    '127.0.0.1',
+    'localhost'
+]
 
 
 # Application definition
