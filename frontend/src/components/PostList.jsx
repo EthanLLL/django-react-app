@@ -22,7 +22,6 @@ class PostList extends Component {
           ))}
         </Card.Group>
       </div>
-      
     );
   }
 }

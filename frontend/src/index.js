@@ -11,6 +11,8 @@ import PostStore from './stores/PostStore';
 import CommonStore from './stores/CommonStore';
 import RouteStore from './stores/RouteStore';
 import UserStore from './stores/UserStore';
+import NavStore from './stores/NavStore';
+import CommentStore from './stores/CommentStore';
 import { HashRouter } from 'react-router-dom';
 import 'element-theme-default';
 
@@ -19,7 +21,9 @@ const stores = {
   PostStore,
   CommonStore,
   UserStore,
-  RouteStore
+  RouteStore,
+  NavStore,
+  CommentStore
 }
 
 const Root = (

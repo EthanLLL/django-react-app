@@ -6,10 +6,14 @@ import { inject, observer } from 'mobx-react';
 import { withRouter } from 'react-router-dom';
 import PostForm from './PostForm';
 
-@inject('CommonStore')
+@inject('CommonStore', 'NavStore')
 @withRouter
 @observer
 class Home extends Component {
+
+  componentDidMount() {
+    this.props.NavStore.setHomeActive()
+  }
 
   render() {
     return (

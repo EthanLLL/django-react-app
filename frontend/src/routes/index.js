@@ -9,6 +9,7 @@ import Home from '../components/Home';
 import Register from '../components/Register';
 import Login from '../components/Login';
 import Navbar from '../components/Navbar';
+import Message from '../components/Message';
 import { observer, inject } from 'mobx-react';
 
 @inject('UserStore', 'CommonStore')
@@ -25,6 +26,7 @@ class Router extends Component {
         <Switch>
           <Route path="/register" component={Register} />
           <Route path="/login" component={Login} />
+          <Route path="/message" component={Message} />
           <Route path="/" component = {Home} />
         </Switch>
       </div>

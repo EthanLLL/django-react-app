@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import { inject, observer } from 'mobx-react';
 import { withRouter } from 'react-router-dom';
 
-@inject('AuthStore', 'CommonStore', 'UserStore')
+@inject('AuthStore', 'CommonStore', 'NavStore')
 @withRouter
 @observer
 class Navbar extends Component {
@@ -21,19 +21,19 @@ class Navbar extends Component {
   }
 
   render() {
-    const { activeItem } = this.state
+    const { activeItem } = this.props.NavStore
     let {isLogin} = this.props.CommonStore
     if (isLogin) {
       return (
         <div>
           <Menu size='huge' secondary >
-            <Menu.Item as={Link} to='/' name='home' active={activeItem === 'home'} />
-            <Menu.Item name='messages' active={activeItem === 'messages'} />
+            <Menu.Item as={Link} to='/' name='home' active={activeItem.home === true} />
+            <Menu.Item name='messages' as={Link} to='/message' active={activeItem.message === true} />
             <Menu.Menu position='right'>
               <Menu.Item>
                 <Input icon='search' placeholder='Search something...' />
               </Menu.Item>
-              <Menu.Item name='log out' onClick={this.handleLogout} />
+              <Menu.Item name='log out' active={activeItem.login === true} onClick={this.handleLogout} />
             </Menu.Menu>
           </Menu>
         </div>
@@ -42,13 +42,13 @@ class Navbar extends Component {
       return (
         <div>
           <Menu size='huge' secondary >
-            <Menu.Item as={Link} to='/' name='home' active={activeItem === 'home'} />
-            <Menu.Item name='messages' active={activeItem === 'messages'} />
+            <Menu.Item as={Link} to='/' name='home' active={activeItem.home === true} />
+            <Menu.Item name='messages' as={Link} to='/message' active={activeItem.message === true} />
             <Menu.Menu position='right'>
               <Menu.Item>
                 <Input icon='search' placeholder='Search something...' />
               </Menu.Item>
-              <Menu.Item as={Link} to='/login' name='log in' />
+              <Menu.Item as={Link} to='/login' active={activeItem.login === true} name='log in' />
             </Menu.Menu>
           </Menu>
         </div>

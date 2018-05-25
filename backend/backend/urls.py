@@ -20,6 +20,7 @@ from django.views.generic import TemplateView
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
+    url(r'^comments/', include('comments.urls', namespace='comments')),
     url(r'^posts/', include('posts.urls', namespace='post')),
     url(r'^auth/token', obtain_jwt_token),
     url(r'^users/', include('accounts.urls', namespace='users')),

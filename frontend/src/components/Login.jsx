@@ -3,10 +3,14 @@ import { Button, Form, Grid, Header, Message, Segment } from 'semantic-ui-react'
 import { observer, inject } from 'mobx-react';
 import { withRouter, Link } from 'react-router-dom';
 
-@inject('AuthStore', 'CommonStore')
+@inject('AuthStore', 'CommonStore', 'NavStore')
 @withRouter
 @observer
 class Login extends Component {
+
+  componentDidMount() {
+    this.props.NavStore.setLoginActive()
+  }
 
   handleUsernameChange = e => {
     this.props.AuthStore.setUsername(e.target.value)
