@@ -4,7 +4,7 @@ import { observer, inject } from 'mobx-react';
 
 @inject('PostStore', 'CommentStore')
 @observer
-class CommentForm extends Component {
+class CommentListForm extends Component {
 
   handleCommentChange = e => {
     const comment = e.target.value
@@ -26,4 +26,4 @@ class CommentForm extends Component {
   }
 }
 
-export default CommentForm;
+export default CommentListForm;

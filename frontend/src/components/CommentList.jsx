@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Comment } from 'semantic-ui-react'
 import CommentItem from './CommentItem';
-import CommentForm from './CommentForm';
+import CommentListForm from './CommentListForm';
 import { observer, inject } from 'mobx-react';
 
 @inject('PostStore')
@@ -18,9 +18,9 @@ class CommentList extends Component {
     return (
       <div>
         <Comment.Group size='large'>
-          <CommentForm post_id={post_id} idx={this.props.idx} />
+          <CommentListForm post_id={post_id} idx={this.props.idx} />
           {comments.map((item, i) => (
-            <CommentItem item={item} key={item.id} />
+            <CommentItem item={item} key={item.id} post_id={this.props.post_id} idx={this.props.idx} />
           ))}
         </Comment.Group>
       </div>
