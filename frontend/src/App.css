@@ -24,3 +24,21 @@ body{
   margin-bottom: 5px;
 }
 
+.post-list-loader {
+  margin-top: 10px;
+}
+
+#nprogress .bar {
+  background: #ff1c67 !important;
+  height: 3px !important;
+}
+
+#nprogress .peg {
+  box-shadow: 0 0 10px #ff1c67, 0 0 5px #ff1c67 !important;
+}
+
+#nprogress .spinner-icon {
+  border-top-color: #ff1c67 !important;
+  border-left-color: #ff1c67 !important;
+}
+

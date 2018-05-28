@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { inject, observer } from 'mobx-react';
 import PostItem from './PostItem';
-import { Card } from 'semantic-ui-react';
+import { Card, Segment, Dimmer, Loader, Visibility } from 'semantic-ui-react';
 
 
 @inject('PostStore', 'CommonStore')
@@ -12,27 +12,28 @@ class PostList extends Component {
     this.props.PostStore.getPostList()
   }
 
-  handleOnScroll = () => {
-    console.log(window.scrollY)
-  }
-
-  componentDidMount() {
-    window.addEventListener('scroll', this.handleOnScroll())
-  }
-
-  componentWillUnmount() {
-    window.removeEventListener('scroll', this.handleOnScroll())
+  handleLoaderVisible = () => {
+    this.props.PostStore.getPostList()
   }
 
   render() {
     const { PostStore } = this.props
     return (
       <div className='post-list'>
-        <Card.Group onScroll={this.handleOnScroll} ref={this.cardList}>
+        <Card.Group>
           {PostStore.postList.map((item, i) => (
             <PostItem key={item.id} item={item} />
           ))}
         </Card.Group>
+        {
+          PostStore.hasNext === true &&
+          <Visibility onOnScreen={this.handleLoaderVisible} continuous={true}>
+            <div className='post-list-loader'>
+              <Loader active inverted inline='centered' />
+            </div>
+          </Visibility>
+        }
+        
       </div>
     );
   }

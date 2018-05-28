@@ -6,13 +6,28 @@ class PostStore {
 
   @observable postList = []
   @observable newPost = ''
+  @observable nextPage = '/posts/'
+  @observable hasNext = true
 
-  @action setNewPost = (content) => {
-    this.newPost = content
+  // get post list
+  @action setNextPage = (next) => {
+    this.nextPage = next
+  }
+
+  @action setNoMorePost = () => {
+    this.hasNext = false
+  }
+
+  @action setMorePost = () => {
+    this.hasNext = true
+  }
+
+  @action clearPostList = () => {
+    this.postList = []
+    this.nextPage = '/posts/'
   }
 
   @action addToPost = (instance) => {
-    this.postList = []
     this.postList.push(...instance)
     this.postList.map((item, i) => {
       set(item, {comment_list: false})
@@ -21,28 +36,42 @@ class PostStore {
     })
   }
 
-  @action addCommentToPost = (instance, idx) =>{
-    set(this.postList[idx], {comments: instance})
+  @action getPostList = () => {
+    axios.get(this.nextPage).then((res) => {
+      const posts = res.data.results
+      this.addToPost(posts)
+      if (res.data.next === null) {
+        this.setNoMorePost()
+      } else {
+        this.setNextPage(res.data.next)
+        this.setMorePost()
+      }
+    })
   }
 
-  @action postCommentCountAdd = (idx) => {
-    set(this.postList[idx], {comments_count: this.postList[idx].comments_count + 1})
+  // post new post
+  @action setNewPost = (content) => {
+    this.newPost = content
   }
 
-  @action postLikeCountAdd = (idx) => {
-    set(this.postList[idx], {likes: this.postList[idx].likes + 1})
+  @action clearNewPost() {
+    this.newPost = ''
   }
 
-  @action postLike =(post_id, idx) => {
-    axios.post(`/posts/like/${post_id}/`)
-      .then(res => {
-        if (res.data.success === 1) {
-          this.postLikeCountAdd(idx)
-        }
-        notification(res)
-      })
+  @action createPost = () => {
+    const payload = {
+      'content': this.newPost
+    }
+    axios.post('/posts/create/', payload).then(res => {
+      if (res.data.success === 1) {
+        this.clearPostList()
+        this.getPostList()
+      }
+      notification(res)
+    })
   }
 
+  // get comment list
   @action getCommentList = (post_id, idx) => {
     axios.get(`/comments/${post_id}/`)
       .then(res => {
@@ -56,25 +85,27 @@ class PostStore {
     this.postList[idx].comment_list = !this.postList[idx].comment_list
   }
 
-  @action clearNewPost() {
-    this.newPost = ''
+  @action addCommentToPost = (instance, idx) =>{
+    set(this.postList[idx], {comments: instance})
   }
 
-  @action createPost = () => {
-    const payload = {
-      'content': this.newPost
-    }
-    axios.post('/posts/create/', payload).then(res => {
-      notification(res)
-      this.getPostList()
-    })
+  @action postCommentCountAdd = (idx) => {
+    set(this.postList[idx], {comments_count: this.postList[idx].comments_count + 1})
   }
 
-  @action getPostList = () => {
-    axios.get('/posts/').then((res) => {
-      const posts = res.data.results
-      this.addToPost(posts)
-    })
+  // post like
+  @action postLikeCountAdd = (idx) => {
+    set(this.postList[idx], {likes: this.postList[idx].likes + 1})
+  }
+
+  @action postLike =(post_id, idx) => {
+    axios.post(`/posts/like/${post_id}/`)
+      .then(res => {
+        if (res.data.success === 1) {
+          this.postLikeCountAdd(idx)
+        }
+        notification(res)
+      })
   }
 }
 

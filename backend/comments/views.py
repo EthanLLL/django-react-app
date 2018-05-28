@@ -67,7 +67,7 @@ class CommentLikeAPIView(APIView):
             user_id=user_id,
             comment_id=id
         )
-        print (cursor)
+        
         return Response({
             'success': 1,
             'msg': u'like~'

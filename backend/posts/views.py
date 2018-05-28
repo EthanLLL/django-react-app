@@ -67,7 +67,7 @@ class PostCreateAPIView(APIView):
     def post(self, request):
         user_id = request.user.id
         content = request.data.get('content', '')
-        print (content)
+
         post = Post.objects.create(
             content=content,
             user_id=user_id
