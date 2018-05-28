@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PostList from './PostList';
 import UserCard from './UserCard';
-import { Grid } from 'semantic-ui-react';
+import { Grid, Sticky } from 'semantic-ui-react';
 import { inject, observer } from 'mobx-react';
 import { withRouter } from 'react-router-dom';
 import PostForm from './PostForm';
@@ -20,7 +20,9 @@ class Home extends Component {
       <div className='home-component'>
         <Grid>
           <Grid.Column width={4}>
+          <Sticky offset={70}>
           <UserCard />
+          </Sticky>
           </Grid.Column>
           <Grid.Column width={8}>
             <PostForm />

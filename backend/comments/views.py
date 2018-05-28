@@ -3,7 +3,7 @@ from __future__ import unicode_literals
 
 from django.shortcuts import render
 from rest_framework.views import APIView
-from .models import Comment
+from .models import *
 from .serializers import CommentListSerializer
 from rest_framework.response import Response
 from rest_framework.permissions import (
@@ -48,3 +48,28 @@ class CommentListAPIView(APIView):
             'success': 1,
             'msg': 'Comment Posted~'
         })
+
+
+class CommentLikeAPIView(APIView):
+
+    def post(self, request, id):
+        user_id = request.user.id
+        queryset = CommentLike.objects.filter(
+            user_id=user_id,
+            comment_id=id
+        )
+        if queryset.exists() or queryset.count() != 0:
+            return Response({
+                'success': 0,
+                'msg': u'comment already liked~'
+            })
+        cursor = CommentLike.objects.create(
+            user_id=user_id,
+            comment_id=id
+        )
+        print (cursor)
+        return Response({
+            'success': 1,
+            'msg': u'like~'
+        })
+

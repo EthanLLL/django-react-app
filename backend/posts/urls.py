@@ -4,7 +4,8 @@ from .views import (
     PostDetailAPIView,
     PostUpdateAPIView,
     PostDestroyAPIView,
-    PostCreateAPIView
+    PostCreateAPIView,
+    PostLikeView
 )
 
 urlpatterns = [
@@ -13,4 +14,5 @@ urlpatterns = [
     url(r'^(?P<pk>\d+)/$', PostDetailAPIView.as_view(), name='postdetail'),
     url(r'^(?P<pk>\d+)/edit/$', PostUpdateAPIView.as_view(), name='update'),
     url(r'^(?P<pk>\d+)/delete/$', PostDestroyAPIView.as_view(), name='delete'),
+    url(r'^like/(?P<pk>\d+)/$', PostLikeView.as_view(), name='like'),
 ]

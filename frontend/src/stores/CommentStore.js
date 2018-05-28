@@ -1,7 +1,7 @@
 import { observable, action } from 'mobx';
 import axios from '../apis/axios';
-import { Notification } from 'element-react';
 import PostStore from './PostStore';
+import notification from '../utils/notification';
 
 class CommentStore {
 
@@ -24,6 +24,16 @@ class CommentStore {
     }
   }
 
+  @action commentLike = (id, post_id, idx) => {
+    axios.post(`/comments/like/${id}/`)
+      .then(res => {
+        if (res.data.success === 1) {
+          PostStore.getCommentList(post_id, idx)
+        }
+        notification(res)
+      })
+  }
+
   @action createNewCommentToPost = (post_id, idx) => {
     const payload = {
       comment: this.newComment
@@ -31,15 +41,11 @@ class CommentStore {
     axios.post(`/comments/${post_id}/`, payload)
       .then(res => {
         if (res.data.success === 1) {
-          Notification({
-            title: 'success',
-            message: res.data.msg,
-            duration: 2000,
-            type: 'success'
-          })
           PostStore.getCommentList(post_id, idx)
           this.clearCommentForm('toPost')
+          PostStore.postCommentCountAdd(idx)
         }
+        notification(res)
       })
   }
 
@@ -50,15 +56,10 @@ class CommentStore {
     axios.post(`/comments/${post_id}/`, payload)
       .then(res => {
         if (res.data.success === 1) {
-          Notification({
-            title: 'success',
-            message: res.data.msg,
-            duration: 2000,
-            type: 'success'
-          })
           PostStore.getCommentList(post_id, idx)
           this.clearCommentForm('toComment')
         }
+        notification(res)
       })
   }
 }

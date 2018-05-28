@@ -12,11 +12,23 @@ class PostList extends Component {
     this.props.PostStore.getPostList()
   }
 
+  handleOnScroll = () => {
+    console.log(window.scrollY)
+  }
+
+  componentDidMount() {
+    window.addEventListener('scroll', this.handleOnScroll())
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener('scroll', this.handleOnScroll())
+  }
+
   render() {
     const { PostStore } = this.props
     return (
       <div className='post-list'>
-        <Card.Group>
+        <Card.Group onScroll={this.handleOnScroll} ref={this.cardList}>
           {PostStore.postList.map((item, i) => (
             <PostItem key={item.id} item={item} />
           ))}

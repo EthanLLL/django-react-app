@@ -17,3 +17,9 @@ class Post(models.Model):
 
     def __unicode__(self):
         return self.content
+
+
+class PostLike(models.Model):
+    post = models.ForeignKey(Post, related_name='likes')
+    user = models.ForeignKey(settings.AUTH_USER_MODEL)
+    timestamp = models.DateTimeField(auto_now_add=True)

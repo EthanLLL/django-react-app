@@ -7,7 +7,7 @@ from django.http import JsonResponse, HttpResponse, HttpResponseRedirect, Http40
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status, viewsets
-from .models import Post
+from .models import *
 from .serializers import (
     PostListSerializer,
     PostDetailSerializer,
@@ -90,3 +90,26 @@ class PostDestroyAPIView(DestroyAPIView):
         IsAuthenticated,
         IsOwnerOrReadOnly
     ]
+
+
+class PostLikeView(APIView):
+
+    def post(self, request, pk):
+        user_id = request.user.id
+        queryset = PostLike.objects.filter(
+            user_id=user_id,
+            post_id=pk
+        )
+        if queryset.exists() or queryset.count() != 0:
+            return Response({
+                'success': 0,
+                'msg': u'already liked~'
+            })
+        PostLike.objects.create(
+            user_id=request.user.id,
+            post_id=pk
+        )
+        return Response({
+            'success': 1,
+            'msg': u'like~~'
+        })

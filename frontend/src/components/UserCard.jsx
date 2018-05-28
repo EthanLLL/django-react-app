@@ -11,9 +11,9 @@ class UserCard extends Component {
   }
 
   render() {
-    const { username, email } = this.props.UserStore
+    const { username, email, user_count, likes_count } = this.props.UserStore
     return (
-      <div>
+      <div className='usercard-fixed'>
         <Card>
           <Card.Content>
             <Image floated='left' size='mini' src='http://p.kengdie.com/touxiang/03/57/141465082.jpg' />
@@ -32,11 +32,11 @@ class UserCard extends Component {
           </Card.Content>
           <Card.Content extra>
             <Icon name='user' />
-            罗震的第 1 位粉丝
+            罗震的第 {user_count} 位粉丝
           </Card.Content>
           <Card.Content extra>
             <Icon name='favorite' />
-            为罗震点了 10 个赞
+            为罗震点了 {likes_count} 个赞
           </Card.Content>
         </Card>
       </div>

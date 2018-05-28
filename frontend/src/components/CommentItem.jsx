@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Comment, Button, Input } from 'semantic-ui-react';
 import { inject, observer } from 'mobx-react';
 import axios from '../apis/axios';
-import { Notification } from 'element-react';
+import notification from '../utils/notification';
 
 @inject('PostStore', 'CommentStore')
 @observer
@@ -31,6 +31,10 @@ class CommentItem extends Component {
     this._showCommentFormToggle()
   }
 
+  handleLikeClick = () => {
+    this.props.CommentStore.commentLike(this.props.item.id, this.props.post_id, this.props.idx)
+  }
+
   handleCommentChange = e => {
     const comment = e.target.value
     this.setState({
@@ -50,16 +54,11 @@ class CommentItem extends Component {
     axios.post(`/comments/${this.props.post_id}/`, payload)
       .then(res => {
         if (res.data.success === 1) {
-          Notification({
-            title: 'success',
-            message: res.data.msg,
-            duration: 2000,
-            type: 'success'
-          })
           this.props.PostStore.getCommentList(this.props.post_id, this.props.idx)
           this._clearCommentForm()
           this._showCommentFormToggle()
         }
+        notification(res)
       })
   }
 
@@ -86,6 +85,7 @@ class CommentItem extends Component {
           </Comment.Metadata>
           <Comment.Text>{item.comment}</Comment.Text>
           <Comment.Actions>
+            <Comment.Action onClick={this.handleLikeClick}>Like {item.likes}</Comment.Action>
             {
               this.state.showCommentItemForm === false &&
               <Comment.Action onClick={this.handleReplyClick}>Reply</Comment.Action>

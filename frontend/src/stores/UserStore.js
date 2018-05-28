@@ -6,6 +6,8 @@ class UserStore {
   @observable username;
   @observable email;
   @observable currentUser;
+  @observable user_count;
+  @observable likes_count;
 
   @action fetchUserInfo() {
     axios.get('/users/user_info').then((res) => {
@@ -20,6 +22,8 @@ class UserStore {
     this.currentUser = 1
     this.username = user.username
     this.email = user.email
+    this.user_count = user.user_count
+    this.likes_count = user.likes_count
   }
 
   @action forgetUser() {
