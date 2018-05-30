@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
-
+from django.db.models import Q
 from django.shortcuts import render
 from rest_framework.views import APIView
 from .models import *
@@ -40,11 +40,12 @@ class CommentListAPIView(APIView):
                 'success': 0,
                 'msg': u'why comment to yourself?'
             })
-        comment_qs = Comment.objects.filter( 
-            comment_by_id=comment_by_id,
-            post_id=post_id
+        comment_qs = Comment.objects.filter(
+            Q(comment_by_id=comment_by_id) &
+            Q(post_id=post_id)
         )
-        if comment_qs.exists() or comment_qs.count() != 0:
+        post_qs = Post.objects.get(id=post_id)
+        if (comment_qs.exists() or comment_qs.count() != 0) or post_qs.user_id == comment_by_id:
             return Response({
                 'success': 0,
                 'msg': u'not supposed to comment to 1 post twice~'

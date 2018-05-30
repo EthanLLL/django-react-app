@@ -58,6 +58,10 @@ class CommentItem extends Component {
           this.props.PostStore.getCommentList(this.props.post_id, this.props.idx)
           this._clearCommentForm()
           this._showCommentFormToggle()
+        } else {
+          this.setState({
+            commentToComment: ''
+          })
         }
         notification(res)
       })
