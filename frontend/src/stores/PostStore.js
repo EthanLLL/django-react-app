@@ -1,6 +1,7 @@
 import { observable, set, action } from 'mobx';
 import axios from '../apis/axios';
 import notification from '../utils/notification';
+import UserStore from './UserStore';
 
 class PostStore {
 
@@ -96,6 +97,7 @@ class PostStore {
   // post like
   @action postLikeCountAdd = (idx) => {
     set(this.postList[idx], {likes: this.postList[idx].likes + 1})
+    UserStore.fetchUserInfo()
   }
 
   @action postLike =(post_id, idx) => {

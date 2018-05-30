@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { inject, observer } from 'mobx-react';
 import PostItem from './PostItem';
-import { Card, Segment, Dimmer, Loader, Visibility } from 'semantic-ui-react';
+import { Card, Loader, Visibility, Header } from 'semantic-ui-react';
 
 
 @inject('PostStore', 'CommonStore')
@@ -26,14 +26,16 @@ class PostList extends Component {
           ))}
         </Card.Group>
         {
-          PostStore.hasNext === true &&
+          PostStore.hasNext === true ?
           <Visibility onOnScreen={this.handleLoaderVisible} continuous={true}>
             <div className='post-list-loader'>
               <Loader active inverted inline='centered' />
             </div>
-          </Visibility>
+          </Visibility> :
+            <div className='post-list-loader'>
+              <Header as='h3' textAlign='center' inverted>No more post~</Header>
+            </div>
         }
-        
       </div>
     );
   }

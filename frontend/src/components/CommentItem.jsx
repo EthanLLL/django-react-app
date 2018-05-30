@@ -3,6 +3,7 @@ import { Comment, Button, Input } from 'semantic-ui-react';
 import { inject, observer } from 'mobx-react';
 import axios from '../apis/axios';
 import notification from '../utils/notification';
+import ReactMarkdown from 'react-markdown';
 
 @inject('PostStore', 'CommentStore')
 @observer
@@ -83,7 +84,7 @@ class CommentItem extends Component {
           <Comment.Metadata>
             <div>{item.timestamp}</div>
           </Comment.Metadata>
-          <Comment.Text>{item.comment}</Comment.Text>
+          <Comment.Text><ReactMarkdown source={item.comment} /></Comment.Text>
           <Comment.Actions>
             <Comment.Action onClick={this.handleLikeClick}>Like {item.likes}</Comment.Action>
             {
@@ -94,7 +95,7 @@ class CommentItem extends Component {
             {
               this.state.showCommentItemForm === true &&
               <div>
-                <Input size='mini' fluid type='text' placeholder='Comment to author...'>
+                <Input size='mini' fluid type='text' placeholder={`Comment to ${item.comment_by.username}...`}>
                   <input value={this.state.commentToComment} onChange={this.handleCommentChange} />
                 </Input>
                 <Button size='mini' onClick={this.handleCommentCancel}>Cancel</Button>

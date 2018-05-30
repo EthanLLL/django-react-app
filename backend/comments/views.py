@@ -35,6 +35,20 @@ class CommentListAPIView(APIView):
         comment_by_id = request.user.id
         comment_to_id = request.data.get('comment_to_id', None)
         comment = request.data.get('comment', '')
+        if comment_by_id == comment_to_id:
+            return Response({
+                'success': 0,
+                'msg': u'why comment to yourself?'
+            })
+        comment_qs = Comment.objects.filter( 
+            comment_by_id=comment_by_id,
+            post_id=post_id
+        )
+        if comment_qs.exists() or comment_qs.count() != 0:
+            return Response({
+                'success': 0,
+                'msg': u'not supposed to comment to 1 post twice~'
+            })
         param_dict = {
             'comment': comment,
             'comment_by_id': comment_by_id,

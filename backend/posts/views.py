@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
-
+import datetime
 from django.db.models import Q
 from django.shortcuts import render, get_object_or_404, redirect
 from django.http import JsonResponse, HttpResponse, HttpResponseRedirect, Http404
@@ -67,7 +67,18 @@ class PostCreateAPIView(APIView):
     def post(self, request):
         user_id = request.user.id
         content = request.data.get('content', '')
-
+        today = datetime.datetime.now()
+        today = str(today)[:10]
+        print (today)
+        post_qs = Post.objects.filter(
+            user_id=user_id,
+            timestamp__icontains=today
+        )
+        if post_qs.exists() or post_qs.count() != 0:
+            return Response({
+                'success': 0,
+                'msg': u'Not supposed to post twice during 1 day~'
+            })
         post = Post.objects.create(
             content=content,
             user_id=user_id

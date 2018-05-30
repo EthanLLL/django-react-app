@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Image, Button, Icon, Card, Comment } from 'semantic-ui-react';
 import { inject, observer } from 'mobx-react';
 import CommentList from './CommentList';
+import ReactMarkdown from 'react-markdown';
 
 @inject('PostStore')
 @observer
@@ -15,6 +16,25 @@ class PostItem extends Component {
     this.props.PostStore.postLike(this.props.item.id, this.props.item.idx)
   }
 
+  dateFormat = timestamp => {
+    const date = new Date(timestamp).getTime()
+    const now = new Date().getTime()
+    let timeOffset = (now - date) / 1000
+    if (timeOffset < 60) {
+      if (timeOffset < 1) {
+        timeOffset = 1
+      }
+      return `${parseInt(timeOffset, 10)} ${parseInt(timeOffset, 10) >= 2 ? 'secs' : 'sec'} ago`
+    } else if (timeOffset / 60 < 60) {
+      return `${parseInt((timeOffset / 60), 10)} ${parseInt((timeOffset / 60), 10) >= 2 ? 'mins' : 'min'} ago`
+    } else if (timeOffset / 3600 < 24) {
+      return `${parseInt((timeOffset / 3600), 10)} ${parseInt((timeOffset / 3600), 10) >= 2 ? 'hours' : 'hour'} ago`
+    } else {
+      return `${parseInt((timeOffset / 86400), 10)} ${parseInt((timeOffset / 86400), 10) >= 2 ? 'days': 'day'} ago`
+    }
+
+  }
+
   render() {
     let { item } = this.props
     const head_img = 'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1526878356692&di=7a2cba7d1293bfa945d98ba86f22b135&imgtype=0&src=http%3A%2F%2Fe.hiphotos.baidu.com%2Fzhidao%2Fpic%2Fitem%2Fb03533fa828ba61e3c41e74c4234970a304e5921.jpg'
@@ -26,10 +46,10 @@ class PostItem extends Component {
             {item.user.username}
           </Card.Header>
           <Card.Meta>
-            {item.timestamp}
+            {this.dateFormat(item.timestamp)}
           </Card.Meta>
           <Card.Description>
-            {item.content}
+            <ReactMarkdown source={item.content} />
           </Card.Description>
         </Card.Content>
         <Card.Content>

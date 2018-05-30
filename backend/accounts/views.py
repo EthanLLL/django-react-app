@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 from django.contrib.auth import get_user_model
+from django.core.cache import cache
 from django.shortcuts import render
 from comments.models import *
 from posts.models import *
@@ -48,6 +49,7 @@ class UserInfoAPIView(APIView):
             comment__comment_by__username=u'luozhen'
         )
         likes_count = pl_qs.count() + cl_qs.count()
+        # likes_count, user_count = self.get_from_cache(user.id)
         return Response({
             'success': 1,
             'data': {
@@ -57,6 +59,35 @@ class UserInfoAPIView(APIView):
                 'likes_count': likes_count
             }
         })
+
+    def get_from_cache(self, user_id):
+        user = cache.get(user_id)
+        print (user, 'fetching from cache')
+        if not user:
+            likes_count, user_count = self.set_to_cache(user_id)
+            return likes_count, user_count
+        likes_count = user.get('likes_count')
+        user_count = user.get('user_count')
+        return likes_count, user_count
+
+    def set_to_cache(self, user_id):
+        print ('fetching from db and set to cache')
+        user_count = User.objects.all().count() - 1
+        pl_qs = PostLike.objects.filter(
+            user_id=user_id,
+            post__user__username=u'luozhen'
+        )
+        cl_qs = CommentLike.objects.filter(
+            user_id=user_id,
+            comment__comment_by__username=u'luozhen'
+        )
+        likes_count = pl_qs.count() + cl_qs.count()
+        value = {
+            'likes_count': likes_count,
+            'user_count': user_count
+        }
+        cache.set(user_id, value)
+        return likes_count, user_count
 
 
 class UserCreateAPIView(CreateAPIView):
