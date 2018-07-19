@@ -12,7 +12,9 @@ class PostStore {
 
   // get post list
   @action setNextPage = (next) => {
+    // console.log('next=' + next)
     this.nextPage = next
+    // this.nextPage = `${this.nextPage}&last_post_id=${this.postList[this.postList.length - 1].id}`
   }
 
   @action setNoMorePost = () => {
@@ -44,8 +46,8 @@ class PostStore {
       if (res.data.next === null) {
         this.setNoMorePost()
       } else {
-        this.setNextPage(res.data.next)
         this.setMorePost()
+        this.setNextPage(res.data.next)
       }
     })
   }
@@ -64,6 +66,16 @@ class PostStore {
       'content': this.newPost
     }
     axios.post('/posts/create/', payload).then(res => {
+      if (res.data.success === 1) {
+        this.clearPostList()
+        this.getPostList()
+      }
+      notification(res)
+    })
+  }
+
+  @action deletePost = (id) => {
+    axios.delete(`/posts/${id}/delete/`).then(res => {
       if (res.data.success === 1) {
         this.clearPostList()
         this.getPostList()

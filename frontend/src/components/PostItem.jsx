@@ -16,6 +16,10 @@ class PostItem extends Component {
     this.props.PostStore.postLike(this.props.item.id, this.props.item.idx)
   }
 
+  handlePostDelete = () => {
+    this.props.PostStore.deletePost(this.props.item.id)
+  }
+
   dateFormat = timestamp => {
     const date = new Date(timestamp).getTime()
     const now = new Date().getTime()
@@ -59,6 +63,10 @@ class PostItem extends Component {
           <Button color='violet' size='mini' onClick={this.handleCommentClick}>
             <Icon name='comment' />
             评论 {item.comments_count}
+          </Button>
+          <Button inverted floated='right' color='red' size='mini' onClick={this.handlePostDelete}>
+            <Icon name='delete' />
+            删除
           </Button>
         </Card.Content>
         {this.props.PostStore.postList[item.idx].comment_list === true &&

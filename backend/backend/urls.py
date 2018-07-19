@@ -17,12 +17,14 @@ from django.conf.urls import url, include
 from django.contrib import admin
 from rest_framework_jwt.views import obtain_jwt_token
 from django.views.generic import TemplateView
+from accounts.serializers import CustomJWTSerializer
+from rest_framework_jwt.views import ObtainJSONWebToken
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^comments/', include('comments.urls', namespace='comments')),
     url(r'^posts/', include('posts.urls', namespace='post')),
-    url(r'^auth/token', obtain_jwt_token),
+    url(r'^auth/token', ObtainJSONWebToken.as_view(serializer_class=CustomJWTSerializer)),
     url(r'^users/', include('accounts.urls', namespace='users')),
     url(r'^', TemplateView.as_view(template_name='index.html'))
 ]

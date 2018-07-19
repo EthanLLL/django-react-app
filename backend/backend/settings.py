@@ -28,8 +28,11 @@ DEBUG = True
 
 ALLOWED_HOSTS = [
     '119.29.146.170',
+    '192.168.0.101',
+    '59.41.74.178',
     '127.0.0.1',
-    'localhost'
+    'localhost',
+    'www.luozhenzuishuai.com'
 ]
 
 

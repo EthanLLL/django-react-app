@@ -23,6 +23,7 @@ class Navbar extends Component {
         <Container>
           <Menu.Item as={Link} to='/' name='home' active={activeItem.home === true} />
           <Menu.Item name='messages' as={Link} to='/message' active={activeItem.message === true} />
+          <Menu.Item name='canva element' as={Link} to='/canva' active={activeItem.canva === true} />
           <Menu.Menu position='right'>
             <Menu.Item>
               <Input size='mini' inverted icon='search' placeholder='Search something...' />

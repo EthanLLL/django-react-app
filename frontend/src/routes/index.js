@@ -11,6 +11,7 @@ import Login from '../components/Login';
 import Navbar from '../components/Navbar';
 import Message from '../components/Message';
 import { observer, inject } from 'mobx-react';
+import Canva from '../components/Canva';
 
 @inject('UserStore', 'CommonStore')
 @withRouter
@@ -27,6 +28,7 @@ class Router extends Component {
           <Route path="/register" component={Register} />
           <Route path="/login" component={Login} />
           <Route path="/message" component={Message} />
+          <Route path="/canva" component={Canva} />
           <Route path="/" component = {Home} />
         </Switch>
       </div>

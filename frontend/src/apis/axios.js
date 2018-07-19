@@ -6,7 +6,7 @@ import CommonStore from '../stores/CommonStore';
 
 axios.defaults.xsrfHeaderName = 'X-CSRFToken'
 axios.defaults.xsrfCookieName = 'csrftoken'
-// axios.defaults.baseURL = 'http://127.0.0.1:8000';
+axios.defaults.baseURL = 'http://127.0.0.1:7001';
 axios.defaults.headers.common['Authorization'] = 'JWT ' + CommonStore.token
 
 axios.interceptors.request.use(function (config) {

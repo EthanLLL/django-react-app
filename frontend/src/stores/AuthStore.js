@@ -16,6 +16,7 @@ class AuthStore {
 
   @action setUsername = (username) => {
     this.values.username = username
+    console.log(this.values)
   }
 
   @action setEmail = (email) => {
@@ -38,9 +39,14 @@ class AuthStore {
   }
 
   @action login = () => {
+    let username_or_email = ''
+    if (this.values.username === '' && this.values.email !== '') {
+      username_or_email = this.values.email
+    } else {
+      username_or_email = this.values.username
+    }
     const payload = {
-      'username': this.values.username,
-      'email': this.values.email,
+      'username_or_email': username_or_email,
       'password': this.values.password
     }
     axios.post('/auth/token/', payload)

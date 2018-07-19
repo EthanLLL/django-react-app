@@ -46,7 +46,11 @@ class PostListAPIView(ListAPIView):
 
     def get_queryset(self, *args, **kwargs):
         user = self.request.user
-        queryset_list = Post.objects.all().order_by('-timestamp')
+        last_post_id = self.request.GET.get('last_post_id', 0)
+        print (last_post_id)
+        queryset_list = Post.objects.filter().exclude(id=int(last_post_id)).order_by('-timestamp')
+        for i in queryset_list:
+            print (i.id)
         query = self.request.GET.get('q', None)
         if query:
             queryset_list = queryset_list.filter(
@@ -69,16 +73,15 @@ class PostCreateAPIView(APIView):
         content = request.data.get('content', '')
         today = datetime.datetime.now()
         today = str(today)[:10]
-        print (today)
-        post_qs = Post.objects.filter(
-            user_id=user_id,
-            timestamp__icontains=today
-        )
-        if post_qs.exists() or post_qs.count() != 0:
-            return Response({
-                'success': 0,
-                'msg': u'Not supposed to post twice during 1 day~'
-            })
+        # post_qs = Post.objects.filter(
+        #     user_id=user_id,
+        #     timestamp__icontains=today
+        # )
+        # if post_qs.exists() or post_qs.count() != 0:
+        #     return Response({
+        #         'success': 0,
+        #         'msg': u'Not supposed to post twice during 1 day~'
+        #     })
         post = Post.objects.create(
             content=content,
             user_id=user_id
@@ -94,13 +97,19 @@ class PostUpdateAPIView(UpdateAPIView):
     serializer_class = PostDetailSerializer
 
 
-class PostDestroyAPIView(DestroyAPIView):
-    queryset = Post.objects.all()
-    serializer_class = PostDetailSerializer
+class PostDestroyAPIView(APIView):
+
     permission_classes = [
         IsAuthenticated,
         IsOwnerOrReadOnly
     ]
+
+    def delete(self, request, pk):
+        Post.objects.filter(id=pk).delete()
+        return Response({
+            'success': 1,
+            'msg': u'deleted~'
+        })
 
 
 class PostLikeView(APIView):
