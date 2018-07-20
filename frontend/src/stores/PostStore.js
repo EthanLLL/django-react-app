@@ -1,4 +1,4 @@
-import { observable, set, action } from 'mobx';
+import { observable, set, action, computed } from 'mobx';
 import axios from '../apis/axios';
 import notification from '../utils/notification';
 import UserStore from './UserStore';
@@ -7,14 +7,17 @@ class PostStore {
 
   @observable postList = []
   @observable newPost = ''
-  @observable nextPage = '/posts/'
   @observable hasNext = true
+  @observable offset = 0;
+  @observable limit = 3;
 
   // get post list
-  @action setNextPage = (next) => {
-    // console.log('next=' + next)
-    this.nextPage = next
-    // this.nextPage = `${this.nextPage}&last_post_id=${this.postList[this.postList.length - 1].id}`
+  @action setNextOffset = () => {
+    this.offset = this.offset + this.limit
+  }
+
+  @computed get nextPage() {
+    return `/posts/?offset=${this.offset}&limit=${this.limit}`
   }
 
   @action setNoMorePost = () => {
@@ -27,14 +30,13 @@ class PostStore {
 
   @action clearPostList = () => {
     this.postList = []
-    this.nextPage = '/posts/'
+    this.offset = 0;
   }
 
   @action addToPost = (instance) => {
     this.postList.push(...instance)
     this.postList.map((item, i) => {
-      set(item, {comment_list: false})
-      set(item, {idx: i})
+      set(item, {commentListToggle: false})
       set(item, {comments: []})
     })
   }
@@ -46,8 +48,7 @@ class PostStore {
       if (res.data.next === null) {
         this.setNoMorePost()
       } else {
-        this.setMorePost()
-        this.setNextPage(res.data.next)
+        this.setNextOffset()
       }
     })
   }
@@ -63,7 +64,7 @@ class PostStore {
 
   @action createPost = () => {
     const payload = {
-      'content': this.newPost
+      content: this.newPost
     }
     axios.post('/posts/create/', payload).then(res => {
       if (res.data.success === 1) {
@@ -77,46 +78,54 @@ class PostStore {
   @action deletePost = (id) => {
     axios.delete(`/posts/${id}/delete/`).then(res => {
       if (res.data.success === 1) {
-        this.clearPostList()
-        this.getPostList()
+        const idx = this.postList.findIndex(item => item.id === id)
+        this.postList.splice(idx, 1)
       }
       notification(res)
     })
   }
 
   // get comment list
-  @action getCommentList = (post_id, idx) => {
+  @action getCommentList = (post_id) => {
     axios.get(`/comments/${post_id}/`)
       .then(res => {
         if (res.data.success === 1) {
-          this.addCommentToPost(res.data.data, idx)
+          this.addCommentToPost(res.data.data, post_id)
         }
       })
   }
 
-  @action viewCommentList = (idx) => {
-    this.postList[idx].comment_list = !this.postList[idx].comment_list
+  @action viewCommentList = (id) => {
+    const idx = this.postList.findIndex(item => item.id === id)
+    const { commentListToggle } = this.postList[idx];
+    this.postList[idx].commentListToggle = !commentListToggle;
   }
 
-  @action addCommentToPost = (instance, idx) =>{
-    set(this.postList[idx], {comments: instance})
+  @action addCommentToPost = (instance, post_id) =>{
+    const idx = this.postList.findIndex(item => item.id === post_id)
+    this.postList[idx].comments = []
+    this.postList[idx].comments.push(...instance);
   }
 
-  @action postCommentCountAdd = (idx) => {
-    set(this.postList[idx], {comments_count: this.postList[idx].comments_count + 1})
+  @action postCommentCountAdd = (id) => {
+    const idx = this.postList.findIndex(item => item.id === id)
+    const { comments_count } = this.postList[idx]
+    this.postList[idx].comments_count = comments_count + 1
   }
 
   // post like
-  @action postLikeCountAdd = (idx) => {
-    set(this.postList[idx], {likes: this.postList[idx].likes + 1})
+  @action postLikeCountAdd = (id) => {
+    const idx = this.postList.findIndex(item => item.id === id)
+    const { likes } = this.postList[idx];
+    this.postList[idx].likes = likes + 1;
     UserStore.fetchUserInfo()
   }
 
-  @action postLike =(post_id, idx) => {
+  @action postLike =(post_id) => {
     axios.post(`/posts/like/${post_id}/`)
       .then(res => {
         if (res.data.success === 1) {
-          this.postLikeCountAdd(idx)
+          this.postLikeCountAdd(post_id)
         }
         notification(res)
       })

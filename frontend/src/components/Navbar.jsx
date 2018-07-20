@@ -19,11 +19,10 @@ class Navbar extends Component {
     let {isLogin} = this.props.CommonStore
     return (
       <div style={{ marginBottom: '70px' }}>
-        <Menu fixed='top' size='huge' inverted className='nav-color'>
+        <Menu fixed='top' size='huge' borderless inverted style={{backgroundColor: '#4a4c8e'}}>
         <Container>
-          <Menu.Item as={Link} to='/' name='home' active={activeItem.home === true} />
+          <Menu.Item name='home' as={Link} to='/' active={activeItem.home === true} />
           <Menu.Item name='messages' as={Link} to='/message' active={activeItem.message === true} />
-          <Menu.Item name='canva element' as={Link} to='/canva' active={activeItem.canva === true} />
           <Menu.Menu position='right'>
             <Menu.Item>
               <Input size='mini' inverted icon='search' placeholder='Search something...' />

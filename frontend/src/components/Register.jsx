@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Button, Form, Grid, Header, Message } from 'semantic-ui-react';
+import { Button, Form, Grid, Header, Message, Segment } from 'semantic-ui-react';
 import { observer, inject } from 'mobx-react';
 import { withRouter } from 'react-router-dom';
 import {Link} from 'react-router-dom';
@@ -40,13 +40,14 @@ class Register extends Component {
       verticalAlign='middle'
       >
       <Grid.Column style={{ maxWidth: 450 }}>
-        <Header as='h1' color='teal' textAlign='center'>
+        <Header as='h1' inverted textAlign='center'>
           注册
         </Header>
-        <Form size='large'>
+        <Segment>
+          <Form size='large'>
             <Form.Input 
               required
-              size='large'
+              size='huge'
               fluid
               icon='user'
               name='username'
@@ -56,7 +57,7 @@ class Register extends Component {
               placeholder='Username'
             />
             <Form.Input
-              size='large'
+              size='huge'
               fluid
               icon='user'
               name='email'
@@ -66,7 +67,7 @@ class Register extends Component {
               placeholder='Email'
             />
             <Form.Input
-              size='large'
+              size='huge'
               fluid
               icon='lock'
               name='password'
@@ -77,7 +78,7 @@ class Register extends Component {
               type='password'
             />
             <Form.Input
-              size='large'
+              size='huge'
               fluid
               icon='lock'
               name='password2'
@@ -88,12 +89,13 @@ class Register extends Component {
               type='password'
             />
             <Button 
-              color='teal' 
-              fluid size='large'
+              style={{backgroundColor: '#4a4c8e', color: 'white'}}
+              fluid size='huge'
               onClick={this.handleClick.bind(this)} >
               Register
             </Button>
-        </Form>
+          </Form>
+        </Segment>
         <Message>
           已有账号？ <Link to='/login'>登陆</Link>
         </Message>

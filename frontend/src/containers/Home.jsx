@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
-import PostList from './PostList';
-import UserCard from './UserCard';
+import PostList from '../components/PostList';
+import UserCard from '../components/UserCard';
 import { Grid } from 'semantic-ui-react';
 import { inject, observer } from 'mobx-react';
 import { withRouter } from 'react-router-dom';
-import PostForm from './PostForm';
+import PostForm from '../components/PostForm';
 
 @inject('CommonStore', 'NavStore')
 @withRouter

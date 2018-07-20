@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Button, Form, Grid, Header, Message, Segment } from 'semantic-ui-react';
+import { Button, Form, Grid, Header, Message, Segment, Image } from 'semantic-ui-react';
 import { observer, inject } from 'mobx-react';
 import { withRouter, Link } from 'react-router-dom';
 
@@ -33,7 +33,7 @@ class Login extends Component {
   }
 
   render() {
-    const { values } = this.props.AuthStore
+    const { values } = this.props.AuthStore;
     return (
       <div>
       <Grid
@@ -42,11 +42,11 @@ class Login extends Component {
       verticalAlign='middle'
       >
       <Grid.Column style={{ maxWidth: 450 }}>
-        <Header as='h2' color='teal' textAlign='center'>
+        <Header as='h1' inverted textAlign='center'>
           登陆
         </Header>
-        <Form size='large'>
-          <Segment stacked>
+        <Segment>
+          <Form size='large'>
             <Form.Input
               fluid
               size='huge'
@@ -78,11 +78,14 @@ class Login extends Component {
               placeholder='Password'
               type='password'
             />
-            <Button color='teal' 
-                    fluid size='large'
-                    onClick={this.handleClick.bind(this)} >Login</Button>
-          </Segment>
-        </Form>
+            <Button 
+              style={{backgroundColor: '#4a4c8e', color: 'white'}}
+              // color='violet' 
+              fluid 
+              size='huge'
+              onClick={this.handleClick.bind(this)} >Login</Button>
+          </Form>
+        </Segment>
         <Message>
           新朋友？ <Link to='/register/'>注册</Link>
         </Message>

@@ -9,21 +9,20 @@ import { observer, inject } from 'mobx-react';
 class CommentList extends Component {
 
   componentWillMount() {
-    this.props.PostStore.getCommentList(this.props.post_id, this.props.idx)
+    this.props.PostStore.getCommentList(this.props.post_id)
   }
 
   render() {
-    const {post_id} = this.props
-    const {comments} = this.props.PostStore.postList[this.props.idx]
+    const { post_id, comments } = this.props
     return (
-      <div>
+      <React.Fragment>
         <Comment.Group size='large'>
-          <CommentListForm post_id={post_id} idx={this.props.idx} />
+          <CommentListForm post_id={post_id} />
           {comments.map((item, i) => (
-            <CommentItem item={item} key={item.id} post_id={this.props.post_id} idx={this.props.idx} />
+            <CommentItem item={item} key={item.id} />
           ))}
         </Comment.Group>
-      </div>
+      </React.Fragment>
     );
   }
 }

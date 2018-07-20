@@ -19,26 +19,26 @@ class CommentStore {
     }
   }
 
-  @action commentLike = (id, post_id, idx) => {
+  @action commentLike = (id, post_id) => {
     axios.post(`/comments/like/${id}/`)
       .then(res => {
         if (res.data.success === 1) {
-          PostStore.getCommentList(post_id, idx)
+          PostStore.getCommentList(post_id)
         }
         notification(res)
       })
   }
 
-  @action createNewCommentToPost = (post_id, idx) => {
+  @action createNewCommentToPost = (post_id, comment) => {
     const payload = {
-      comment: this.newComment
+      comment: comment
     }
     axios.post(`/comments/${post_id}/`, payload)
       .then(res => {
         if (res.data.success === 1) {
-          PostStore.getCommentList(post_id, idx)
+          PostStore.getCommentList(post_id)
           this.clearCommentForm('toPost')
-          PostStore.postCommentCountAdd(idx)
+          PostStore.postCommentCountAdd(post_id)
         } else {
           this.clearCommentForm('toPost')
         }

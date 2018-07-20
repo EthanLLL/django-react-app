@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { Card, Image, Icon } from 'semantic-ui-react';
 import { observer, inject } from 'mobx-react';
+import headLogo from '../assets/communist.jpeg';
+import threeLine from '../assets/3-line.jpg';
 
 @inject('UserStore', 'CommonStore')
 @observer
@@ -14,9 +16,9 @@ class UserCard extends Component {
     const { username, email, user_count, likes_count } = this.props.UserStore
     return (
       <div className='usercard-fixed'>
-        <Card>
+        <Card secondary>
           <Card.Content>
-            <Image floated='left' size='mini' src='http://p.kengdie.com/touxiang/03/57/141465082.jpg' />
+            <Image floated='left' size='mini' src={headLogo} />
             <Card.Header>
               {username}
             </Card.Header>
@@ -24,7 +26,7 @@ class UserCard extends Component {
               {email}
             </Card.Meta>
           </Card.Content>
-          <Image src='http://old.bz55.com/uploads/allimg/160607/140-16060G00128.jpg' />
+          <Image src={threeLine} />
           <Card.Content>
             <Card.Description>
                 Steve wants to add you to the group <strong>best friends</strong>

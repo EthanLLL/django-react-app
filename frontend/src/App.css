@@ -7,11 +7,6 @@ body{
   font-family: sans-serif;
 }
 
-.nav-color {
-  background-color: #4a4c8e !important;
-  border-bottom: 0.5px solid #636499 !important;
-}
-
 .post-list {
   margin-top: 1em;
 }

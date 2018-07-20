@@ -33,7 +33,7 @@ class CommentItem extends Component {
   }
 
   handleLikeClick = () => {
-    this.props.CommentStore.commentLike(this.props.item.id, this.props.post_id, this.props.idx)
+    this.props.CommentStore.commentLike(this.props.item.id, this.props.item.post_id)
   }
 
   handleCommentChange = e => {
@@ -52,10 +52,10 @@ class CommentItem extends Component {
       comment_to_id: this.props.item.comment_by.id,
       comment: this.state.commentToComment,
     }
-    axios.post(`/comments/${this.props.post_id}/`, payload)
+    axios.post(`/comments/${this.props.item.post_id}/`, payload)
       .then(res => {
         if (res.data.success === 1) {
-          this.props.PostStore.getCommentList(this.props.post_id, this.props.idx)
+          this.props.PostStore.getCommentList(this.props.item.post_id)
           this._clearCommentForm()
           this._showCommentFormToggle()
         } else {
@@ -74,9 +74,7 @@ class CommentItem extends Component {
         <Comment.Avatar src='/assets/images/avatar/small/matt.jpg' />
         <Comment.Content>
           <Comment.Author>
-            <a>
-            {item.comment_by.username} 
-            </a> 
+            <a>{item.comment_by.username} </a> 
             {
               item.comment_to && 
               <span className='comment-to'>

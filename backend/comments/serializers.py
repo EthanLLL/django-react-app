@@ -15,6 +15,7 @@ class CommentListSerializer(serializers.ModelSerializer):
     comment_by = UserDetailSerializer(read_only=True)
     comment_to = UserDetailSerializer(read_only=True)
     likes = SerializerMethodField()
+    post_id = serializers.IntegerField(source='post.id')
     class Meta:
         model = Comment
         fields = '__all__'

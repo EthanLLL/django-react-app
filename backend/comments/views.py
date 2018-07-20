@@ -44,8 +44,7 @@ class CommentListAPIView(APIView):
             Q(comment_by_id=comment_by_id) &
             Q(post_id=post_id)
         )
-        post_qs = Post.objects.get(id=post_id)
-        if (comment_qs.exists() or comment_qs.count() != 0) or post_qs.user_id == comment_by_id:
+        if (comment_qs.exists() or comment_qs.count() != 0):
             return Response({
                 'success': 0,
                 'msg': u'not supposed to comment to 1 post twice~'

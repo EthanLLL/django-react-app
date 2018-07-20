@@ -17,16 +17,16 @@ class PostList extends Component {
   }
 
   render() {
-    const { PostStore } = this.props
+    const { postList, hasNext } = this.props.PostStore;
     return (
       <div className='post-list'>
         <Card.Group>
-          {PostStore.postList.map((item, i) => (
+          {postList.map((item, i) => (
             <PostItem key={item.id} item={item} />
           ))}
         </Card.Group>
         {
-          PostStore.hasNext === true ?
+          hasNext === true ?
           <Visibility onOnScreen={this.handleLoaderVisible} continuous={true}>
             <div className='post-list-loader'>
               <Loader active inverted inline='centered' />

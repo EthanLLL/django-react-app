@@ -16,7 +16,6 @@ class AuthStore {
 
   @action setUsername = (username) => {
     this.values.username = username
-    console.log(this.values)
   }
 
   @action setEmail = (email) => {

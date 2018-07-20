@@ -9,11 +9,11 @@ import ReactMarkdown from 'react-markdown';
 class PostItem extends Component {
 
   handleCommentClick = () => {
-    this.props.PostStore.viewCommentList(this.props.item.idx)
+    this.props.PostStore.viewCommentList(this.props.item.id)
   }
 
   handleLikeClick = () => {
-    this.props.PostStore.postLike(this.props.item.id, this.props.item.idx)
+    this.props.PostStore.postLike(this.props.item.id)
   }
 
   handlePostDelete = () => {
@@ -69,10 +69,10 @@ class PostItem extends Component {
             删除
           </Button>
         </Card.Content>
-        {this.props.PostStore.postList[item.idx].comment_list === true &&
+        {item.commentListToggle === true &&
           <Card.Content>
             <Comment.Group>
-              <CommentList post_id={item.id} idx={item.idx} />
+              <CommentList post_id={item.id} comments={item.comments} />
             </Comment.Group>  
           </Card.Content>
         }
